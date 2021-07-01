@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.regex.Pattern;
 
-public class User_l_form extends JFrame implements ActionListener {
+public class Emp_sec extends JFrame implements ActionListener {
 
     public static boolean isValid(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
@@ -23,11 +23,11 @@ public class User_l_form extends JFrame implements ActionListener {
 
     Connection con;
     JButton b1, b2, b3, b4, b5;
-    JTextField t1;
-    JPasswordField p2;
+    JTextField t1, t2;
+    JPasswordField p3;
     JLabel l1;
 
-    public User_l_form() {
+    public Emp_sec() {
 
         setSize(1280, 720);
         setLayout(null);
@@ -41,7 +41,6 @@ public class User_l_form extends JFrame implements ActionListener {
         b1.setBounds(275, 250, 175, 30);
         b1.setFocusable(false);
         b1.setFont(new Font(null, Font.PLAIN, 20));
-        b1.addActionListener(this);
         add(b1);
 
         t1 = new JTextField();
@@ -52,35 +51,41 @@ public class User_l_form extends JFrame implements ActionListener {
         t1.setFont(new Font("null", Font.PLAIN, 20));
         add(t1);
 
-        b2 = new JButton("Password");
+        b2 = new JButton("Secret Phrase");
         b2.setBackground(Color.white);
         b2.setForeground(Color.black);
-        b2.setBounds(275, 350, 175, 30);
+        b2.setBounds(275, 300, 175, 30);
         b2.setFocusable(false);
         b2.setFont(new Font(null, Font.PLAIN, 20));
-        b2.addActionListener(this);
         add(b2);
 
-        p2 = new JPasswordField();
-        p2.setEditable(true);
-        p2.setBackground(Color.white);
-        p2.setForeground(Color.black);
-        p2.setBounds(475, 350, 400, 30);
-        add(p2);
+        t2 = new JTextField();
+        t2.setBackground(Color.white);
+        t2.setForeground(Color.black);
+        t2.setCaretColor(Color.black);
+        t2.setBounds(475, 300, 400, 30);
+        t2.setFont(new Font("null", Font.PLAIN, 20));
+        add(t2);
 
-        b3 = new JButton("Login");
+        b3 = new JButton("Password");
         b3.setBackground(Color.white);
         b3.setForeground(Color.black);
-        b3.setBounds(450, 600, 150, 30);
+        b3.setBounds(275, 350, 175, 30);
         b3.setFocusable(false);
         b3.setFont(new Font(null, Font.PLAIN, 20));
-        b3.addActionListener(this);
         add(b3);
 
-        b4 = new JButton("Forgot Password");
+        p3 = new JPasswordField();
+        p3.setEditable(true);
+        p3.setBackground(Color.white);
+        p3.setForeground(Color.black);
+        p3.setBounds(475, 350, 400, 30);
+        add(p3);
+
+        b4 = new JButton("Change Password");
         b4.setBackground(Color.white);
         b4.setForeground(Color.black);
-        b4.setBounds(675, 600, 175, 30);
+        b4.setBounds(510, 600, 250, 30);
         b4.setFocusable(false);
         b4.setFont(new Font(null, Font.PLAIN, 20));
         b4.addActionListener(this);
@@ -106,26 +111,28 @@ public class User_l_form extends JFrame implements ActionListener {
 
         setVisible(true);
 
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == b3) {
+        if (e.getSource() == b4) {
 
             if (isValid(t1.getText())) {
                 try {
                     con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "project", "proj");
-                    PreparedStatement prestat = con.prepareStatement("select email,pass from client where email=? and PASS=?");
+                    PreparedStatement prestat = con.prepareStatement("update employee set pass=? where email=? and secret=?");
 
                     try {
-                        prestat.setString(1, t1.getText());
-                        prestat.setString(2, String.valueOf(p2.getPassword()));
+                        prestat.setString(2, t1.getText());
+                        prestat.setString(3, t2.getText());
+                        prestat.setString(1, String.valueOf(p3.getPassword()));
                         int check = prestat.executeUpdate();
                         if (check == 1) {
-                            JOptionPane.showMessageDialog(null, "User logined");
-                        } else {
+                            JOptionPane.showMessageDialog(null, "Password Updated");
+                            dispose();
+                            new Emp_l_form();
+                        } else{
                             JOptionPane.showMessageDialog(null, "User Does not exist");
                         }
                     } catch (Exception m) {
@@ -139,13 +146,10 @@ public class User_l_form extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Invalid Email");
             }
 
-        } else if (e.getSource() == b4) {
-            dispose();
-            new User_sec();
         } else if (e.getSource() == b5) {
             dispose();
-            new User_S_form();
+            new Emp_l_form();
         }
-
     }
 }
+

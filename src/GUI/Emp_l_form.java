@@ -21,6 +21,7 @@ public class Emp_l_form extends JFrame implements ActionListener {
         return pat.matcher(email).matches();
     }
 
+    static String curr;
     Connection con;
     JButton b1, b2, b3, b4, b5;
     JTextField t1;
@@ -123,6 +124,7 @@ public class Emp_l_form extends JFrame implements ActionListener {
                         prestat.setString(2, String.valueOf(p2.getPassword()));
                         int check = prestat.executeUpdate();
                         if (check == 1) {
+                            curr = t1.getText();
                             JOptionPane.showMessageDialog(null, "User logined");
                         } else {
                             JOptionPane.showMessageDialog(null, "User Does not exist");
@@ -139,7 +141,8 @@ public class Emp_l_form extends JFrame implements ActionListener {
             }
 
         } else if (e.getSource() == b4) {
-
+            dispose();
+            new Emp_sec();
         } else if (e.getSource() == b5) {
             dispose();
             new Emp_S_form();
