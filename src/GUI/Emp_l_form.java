@@ -126,6 +126,8 @@ public class Emp_l_form extends JFrame implements ActionListener {
                         if (check == 1) {
                             curr = t1.getText();
                             JOptionPane.showMessageDialog(null, "User logined");
+                            dispose();
+                            new Flight();
                         } else {
                             JOptionPane.showMessageDialog(null, "User Does not exist");
                         }
