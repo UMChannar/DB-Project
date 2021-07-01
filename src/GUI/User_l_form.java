@@ -120,19 +120,21 @@ public class User_l_form extends JFrame implements ActionListener {
                     con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "project", "proj");
                     PreparedStatement prestat = con.prepareStatement("select email,pass from client where email=? and PASS=?");
 
-                    try {
-                        prestat.setString(1, t1.getText());
-                        prestat.setString(2, String.valueOf(p2.getPassword()));
-                        int check = prestat.executeUpdate();
-                        if (check == 1) {
-                            currr = t1.getText();
-                            JOptionPane.showMessageDialog(null, "User logined");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "User Does not exist");
-                        }
-                    } catch (Exception m) {
-                        JOptionPane.showMessageDialog(null, "Enter all values");
+//                    try {
+                    prestat.setString(1, t1.getText());
+                    prestat.setString(2, String.valueOf(p2.getPassword()));
+                    int check = prestat.executeUpdate();
+                    if (check == 1) {
+                        currr = t1.getText();
+                        JOptionPane.showMessageDialog(null, "User logined");
+                        dispose();
+                        new Booking();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "User Does not exist");
                     }
+//                    } catch (Exception m) {
+//                        JOptionPane.showMessageDialog(null, "Enter all values");
+//                    }
 
                 } catch (SQLException u) {
                     u.printStackTrace();
