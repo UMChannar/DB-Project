@@ -21,6 +21,7 @@ public class User_l_form extends JFrame implements ActionListener {
         return pat.matcher(email).matches();
     }
 
+    static String currr;
     Connection con;
     JButton b1, b2, b3, b4, b5;
     JTextField t1;
@@ -124,6 +125,7 @@ public class User_l_form extends JFrame implements ActionListener {
                         prestat.setString(2, String.valueOf(p2.getPassword()));
                         int check = prestat.executeUpdate();
                         if (check == 1) {
+                            currr = t1.getText();
                             JOptionPane.showMessageDialog(null, "User logined");
                         } else {
                             JOptionPane.showMessageDialog(null, "User Does not exist");
