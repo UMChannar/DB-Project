@@ -179,7 +179,7 @@ public class Flight extends JFrame implements ActionListener {
         g2.add(r7);
         g2.add(r8);
 
-        b7 = new JButton("Book");
+        b7 = new JButton("Enter Data");
         b7.setBackground(Color.white);
         b7.setForeground(Color.black);
         b7.setBounds(510, 600, 250, 30);
@@ -259,7 +259,7 @@ public class Flight extends JFrame implements ActionListener {
                     prestat.setString(7, t4.getText());
                     prestat.setString(8, "Islamabad Airport");
                     prestat.executeQuery();
-                    JOptionPane.showMessageDialog(null, "Booked");
+                    JOptionPane.showMessageDialog(null, "Data Entered");
                 } catch (Exception m) {
                     JOptionPane.showMessageDialog(null, "Enter all values");
                 }
